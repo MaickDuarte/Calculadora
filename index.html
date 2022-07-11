@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="calculadora">
+        <h1>Calculadora</h1>
+        <div id="caixa-resultado">
+            <p id="resultado"></p>
+        </div>
+
+        <table>
+            <tr>
+                <td><button class="botao" onclick="apagarTudo()">C</button></td>
+                <td><button class="botao" onclick="apagarUltimo()"><</button></td>
+                <td><button class="botao" onclick="inserirCalculo('/')">/</button></td>
+                <td><button class="botao" onclick="inserirCalculo('*')">X</button></td>
+            </tr>
+            <tr>
+                <td><button class="botao" onclick="inserir('7')">7</button></td>
+                <td><button class="botao" onclick="inserir('8')">8</button></td>
+                <td><button class="botao" onclick="inserir('9')">9</button></td>
+                <td><button class="botao" onclick="inserirCalculo('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button class="botao" onclick="inserir('4')">4</button></td>
+                <td><button class="botao" onclick="inserir('5')">5</button></td>
+                <td><button class="botao" onclick="inserir('6')">6</button></td>
+                <td><button class="botao" onclick="inserirCalculo('+')">+</button></td>
+            </tr>
+            <tr>
+                <td><button class="botao" onclick="inserir('1')">1</button></td>
+                <td><button class="botao" onclick="inserir('2')">2</button></td>
+                <td><button class="botao" onclick="inserir('3')">3</button></td>
+                <td rowspan="2"><button class="botao igual" onclick="calcular()">=</button></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button class="botao zero" onclick="inserir('0')">0</button></td>
+                <td><button class="botao" onclick="inserir('.')">.</button></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function inserir(numero){/* aqui eu vou inserir o numero na tela*/
+            
+            var num = document.getElementById('resultado').innerHTML; /* coloquei o div de resultado em uma variavel */
+            var validador = document.getElementById('resultado').innerHTML[0]; /* criei um validador para ver se o primeiro item é uma letra*/
+            
+            if(validador === "I"){ /* basicamente, se estiver escrito "Insira um numero"*/
+                document.getElementById('resultado').innerHTML = numero;/* Ele vai transformar o conteudo da div no numero*/
+            } else {
+                document.getElementById('resultado').innerHTML = num + numero;} /* se não tiver escrito, ele vai pegar o campo e adicionar o numero que eu cliquei*/
+        }
+
+        function inserirCalculo(simbulo){ /* aqui eu separei pra colocar os simbulos de calculo*/
+            var vazio = document.getElementById('resultado').innerHTML; /* primeiro eu checo se a linha de calculo está vazia*/
+            var ultimo = document.getElementById('resultado').innerHTML.length - 1; /* e também pego o ultimo elemento dela */ 
+
+            if(vazio.length < 1 || vazio[0] === "I"){/* se ela estiver vazia ou o primeiro digito for "I"  */
+                document.getElementById('resultado').innerHTML = "Insira um numero" /* o resultado será "Insira um numero"*/
+
+            } else if(vazio[ultimo] === "/" || vazio[ultimo] === "*" ||vazio[ultimo] === "-" ||vazio[ultimo] === "+" ){ /* Se o ultimo item colocado for um simbulo...*/
+                /*não vai adicionar nada*/
+            } else {
+                return inserir(simbulo) /* e se os dois não estiverem acontecendo, retorna a função de inserir com o parametro do simbulo*/
+            }
+        }
+
+        function apagarTudo(){
+            document.getElementById('resultado').innerHTML = "";/* basicamente um botão que se clicado a string fica vazia*/
+        } 
+        
+        function apagarUltimo(){/* aqui criei o botao de apagar o ultimo */
+            var resultado = document.getElementById('resultado').innerHTML;/* primeiro eu coleto o campo de resultado*/
+            if( resultado[0] === 'I'){return apagarTudo()/* deixei também para apagar tudo se tiver escrito "Insira um numero"*/
+            }else{
+                document.getElementById('resultado').innerHTML = resultado.substring(0, resultado.length -1) /*e essa função para apagar o ultimo item*/
+            }
+            
+        }
+        function calcular(){/* função final para calcular*/
+            var resultado = document.getElementById('resultado').innerHTML;
+            if(resultado){
+                document.getElementById('resultado').innerHTML = eval(resultado)
+            } else {
+                document.getElementById('resultado').innerHTML = "Insira um numero"
+            }
+        }
+
+    </script>
+</body>
+</html>
