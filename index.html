@@ -18,30 +18,32 @@
             <tr>
                 <td><button class="botao" onclick="apagarTudo()">C</button></td>
                 <td><button class="botao" onclick="apagarUltimo()"><</button></td>
+                <td><button class="botao" onclick="porcento()">%</button></td>
                 <td><button class="botao" onclick="inserirCalculo('/')">/</button></td>
-                <td><button class="botao" onclick="inserirCalculo('*')">X</button></td>
+                
             </tr>
             <tr>
                 <td><button class="botao" onclick="inserir('7')">7</button></td>
                 <td><button class="botao" onclick="inserir('8')">8</button></td>
                 <td><button class="botao" onclick="inserir('9')">9</button></td>
-                <td><button class="botao" onclick="inserirCalculo('-')">-</button></td>
+                <td><button class="botao" onclick="inserirCalculo('*')">X</button></td>
             </tr>
             <tr>
                 <td><button class="botao" onclick="inserir('4')">4</button></td>
                 <td><button class="botao" onclick="inserir('5')">5</button></td>
                 <td><button class="botao" onclick="inserir('6')">6</button></td>
-                <td><button class="botao" onclick="inserirCalculo('+')">+</button></td>
+                <td><button class="botao" onclick="inserirCalculo('-')">-</button></td>
             </tr>
             <tr>
                 <td><button class="botao" onclick="inserir('1')">1</button></td>
                 <td><button class="botao" onclick="inserir('2')">2</button></td>
                 <td><button class="botao" onclick="inserir('3')">3</button></td>
-                <td rowspan="2"><button class="botao igual" onclick="calcular()">=</button></td>
+                <td><button class="botao" onclick="inserirCalculo('+')">+</button></td>
             </tr>
             <tr>
                 <td colspan="2"><button class="botao zero" onclick="inserir('0')">0</button></td>
                 <td><button class="botao" onclick="inserir('.')">.</button></td>
+                <td rowspan="2"><button class="botao igual" onclick="calcular()">=</button></td>
             </tr>
         </table>
     </div>
@@ -91,6 +93,31 @@
                 document.getElementById('resultado').innerHTML = "Insira um numero"
             }
         }
+        function porcento(){/* adicionei a função de calcular porcentagem*/
+            var resultado = document.getElementById('resultado').innerHTML; /* primeiro eu puxo o que está na tela de calculo*/
+            var total = '';
+            var ultimoSimbulo = 0;
+            var resultadoFinal = '';
+
+            for(var i = resultado.length -1; i >= 0; i--){/* um for que percorre por todos os numeros de tras pra frente*/
+                
+                if(resultado[i] === '+' || resultado[i] === '/' || resultado[i] === '*' || resultado[i] === '-' ){/* se encontrar algum simbulo*/
+                    ultimoSimbulo = (i)/* ele vai parar e colocar a posição desse simbulo em uma string*/
+                    break/* parando */
+                } else { ultimoSimbulo = -1} /* se não encontrar, vai deixar a string como -1, essa foi minha solução pra não bugar*/
+            }
+            for(var p = ultimoSimbulo +1; p < resultado.length; p++){/* depois, ele vai começar apartir desse simbulo até o final */
+                total += resultado[p] /* e vai jogar tudo numa string*/
+            } /* fiz isso para que ele aplicasse o % apenas no ultimo numero do calculo*/
+            if(ultimoSimbulo > 0){/* se tiver algum simbulo */
+                for(var q = 0; q <= ultimoSimbulo; q++){ /* vai percorrer por toda a string até ele*/
+                    resultadoFinal += resultado[q]/* e depois colocar em outra string, sem o numero final que vai ser dividido*/
+                }
+            }
+            document.getElementById('resultado').innerHTML =(resultadoFinal + total/100)/* por ultimo, eu pego todos os numeros menos o ultimo, ai adiciono o ultimo só que dividindo por 100*/
+
+        }
+        
 
     </script>
 </body>
